@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "zenithchat"
+version = "0.1.0"
+description = ""
+authors = ["dimalbek <dimalbek@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.110.3"
+sqlalchemy = "^2.0.29"
+alembic = "^1.13.1"
+uvicorn = "^0.29.0"
+pydantic = {extras = ["email"], version = "^2.7.1"}
+passlib = "^1.7.4"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+pydantic-extra-types = {extras = ["phonenumbers"], version = "^2.7.0"}
+datetime = "^5.5"
+phonenumbers = "^8.13.35"
+python-multipart = "^0.0.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

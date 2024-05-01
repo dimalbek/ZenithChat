@@ -4,7 +4,6 @@ from datetime import datetime
 
 class MessageCreate(BaseModel):
     content: str
-    user_id: int
 
 
 class MessageDisplay(BaseModel):
@@ -36,7 +35,6 @@ class UserBase(BaseModel):
 
 
 class MessagesDisplay(BaseModel):
-    id: int
+    sender_email: str
     content: str
     created_at: datetime
-    sender_email: str

@@ -6,11 +6,11 @@ from ..serializers.messages import MessageCreate
 
 class MessagesRepository:
     def send_message(
-        self, db: Session, chat_id: int, message_data: MessageCreate
+        self, db: Session, chat_id: int, user_id: int, message_data: MessageCreate
     ) -> Message:
         chat = (
             db.query(Chat)
-            .filter(Chat.id == chat_id, Chat.users.any(id=message_data.user_id))
+            .filter(Chat.id == chat_id, Chat.users.any(id=user_id))
             .first()
         )
         if not chat:
@@ -20,7 +20,7 @@ class MessagesRepository:
 
         new_message = Message(
             content=message_data.content,
-            sender_id=message_data.user_id,
+            sender_id=user_id,
             chat_id=chat_id,
         )
         db.add(new_message)

@@ -62,3 +62,9 @@ class UsersRepository:
         if not db_user:
             raise HTTPException(status_code=404, detail="User not found")
         return db_user
+
+    def get_user_chats(self, db: Session, user_id: int) -> list:
+        user = db.query(User).filter(User.id == user_id).first()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        return user.chats

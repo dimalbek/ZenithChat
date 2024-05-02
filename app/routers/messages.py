@@ -42,7 +42,7 @@ async def connect_to_chat(
     messages = messages_repository.get_messages(db, chat_id, user_id)
     return [
         MessagesDisplay(
-            sender_email=msg.sender.email,
+            sender=msg.sender.username,
             content=msg.content,
             created_at=msg.created_at,
         )

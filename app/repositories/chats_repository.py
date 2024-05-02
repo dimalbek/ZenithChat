@@ -3,26 +3,26 @@ from sqlalchemy.orm import Session
 from ..database.models import User, Chat
 from passlib.context import CryptContext
 from typing import Optional
+from sqlalchemy import func
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class ChatsRepository:
-    def get_all_chats(self, db: Session, user_id: int) -> list:
-        user = db.query(User).filter(User.id == user_id).first()
-        if not user:
-            raise HTTPException(status_code=404, detail="User not found")
-        return user.chats
-
     def create_chat(
-        self, db: Session, user_id: int, password: Optional[str] = None
+        self,
+        db: Session,
+        user_id: int,
+        name: str,
+        password: Optional[str] = None
     ) -> Chat:
         user = db.query(User).filter(User.id == user_id).first()
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
 
         new_chat = Chat(
+            name=name,
             is_private=bool(password),
             password_hashed=pwd_context.hash(password) if password else None,
             users=[user]
@@ -64,3 +64,9 @@ class ChatsRepository:
         chat.users.append(user)
         db.commit()
         return chat
+
+    def get_all_chats(self, db: Session, skip: int = 0, limit: int = 10):
+        chats = db.query(Chat.id, Chat.name, Chat.is_private
+                         ).offset(skip).limit(limit).all()
+        total = db.query(func.count(Chat.id)).scalar()
+        return chats, total

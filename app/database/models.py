@@ -40,6 +40,7 @@ class Chat(Base):
     __tablename__ = "chats"
 
     id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
     is_private = Column(Boolean, default=False, nullable=False)
     password_hashed = Column(Text, nullable=True)
 

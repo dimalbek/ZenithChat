@@ -6,7 +6,9 @@ from ..database.database import get_db
 from sqlalchemy.orm import Session
 from pydantic import EmailStr
 from ..serializers.users import UserCreate, UserInfo, UserLogin, UserUpdate
+from ..serializers.chats import ChatBase
 from ..repositories.users_repository import UsersRepository
+from typing import List
 
 router = APIRouter()
 users_repository = UsersRepository()
@@ -98,3 +100,12 @@ def get_user(
         username=user.username,
         city=user.city,
     )
+
+
+@router.get("/chats", response_model=List[ChatBase])
+async def get_all_chats(
+    token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
+):
+    user_id = decode_jwt(token)
+    user_chats = users_repository.get_user_chats(db, user_id)
+    return user_chats

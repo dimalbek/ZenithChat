@@ -6,7 +6,11 @@ from ..serializers.messages import MessageCreate
 
 class MessagesRepository:
     def send_message(
-        self, db: Session, chat_id: int, user_id: int, message_data: MessageCreate
+        self,
+        db: Session,
+        chat_id: int,
+        user_id: int,
+        message_data: MessageCreate
     ) -> Message:
         chat = (
             db.query(Chat)
@@ -15,7 +19,8 @@ class MessagesRepository:
         )
         if not chat:
             raise HTTPException(
-                status_code=404, detail="Chat not found or user not part of chat"
+                status_code=404,
+                detail="Chat not found or user not part of chat"
             )
 
         new_message = Message(

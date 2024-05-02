@@ -5,6 +5,8 @@ from sqlalchemy import (
     ForeignKey,
     Table,
     DateTime,
+    Text,
+    Boolean
 )
 from sqlalchemy.orm import relationship
 from .database import Base
@@ -38,8 +40,12 @@ class Chat(Base):
     __tablename__ = "chats"
 
     id = Column(Integer, primary_key=True)
+    is_private = Column(Boolean, default=False, nullable=False)
+    password_hashed = Column(Text, nullable=True)
+
     users = relationship("User", secondary=chat_user_table, back_populates="chats")
     messages = relationship("Message", back_populates="chat")
+    # users = relationship("User", secondary="chat_user", back_populates="chats")
 
 
 class Message(Base):

@@ -1,8 +1,12 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from ..database.database import get_db
-from ..serializers.messages import MessageCreate, MessageDisplay, MessagesDisplay
+from ..serializers.messages import (
+    MessageCreate,
+    MessageDisplay,
+    MessagesDisplay
+)
 from typing import List
 from ..repositories.messages_repository import MessagesRepository
 from .users import decode_jwt
@@ -21,7 +25,11 @@ async def send_message(
     db: Session = Depends(get_db),
 ):
     user_id = decode_jwt(token)
-    return messages_repository.send_message(db, chat_id, user_id, message_data)
+    new_message = messages_repository.send_message(db, chat_id, user_id, message_data)
+    return Response(
+        status_code=200,
+        content=f"message with id {new_message.id} sent to chat with id {new_message.chat_id}"
+    )
 
 
 @router.get("/{chat_id}", response_model=List[MessagesDisplay])

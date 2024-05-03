@@ -68,6 +68,7 @@ def post_login(
         )
 
     access_token = create_jwt(user.id)
+    print(access_token)
     return {"access_token": access_token, "token_type": "bearer"}
 
 

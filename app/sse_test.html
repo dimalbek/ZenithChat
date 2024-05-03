@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SSE Test</title>
+    <script>
+        window.onload = () => {
+            const chatId = 1; // Change this to your specific chat ID
+            const url = `http://127.0.0.1:8000/messages/stream/${chatId}`;
+            const eventSource = new EventSource(url);
+
+            eventSource.onmessage = function (event) {
+                console.log('New message:', event.data);
+                const messageContainer = document.getElementById('messages');
+                const message = JSON.parse(event.data);
+                const content = document.createElement('p');
+                content.textContent = `Message: ${message.content} from ${message.sender_id} at ${message.created_at}`;
+                messageContainer.appendChild(content);
+            };
+
+            eventSource.onerror = function (error) {
+                console.error('EventSource failed:', error);
+                eventSource.close();
+            };
+        };
+    </script>
+</head>
+
+<body>
+    <h1>Messages Stream</h1>
+    <div id="messages"></div>
+</body>
+
+</html>

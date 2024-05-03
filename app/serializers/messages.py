@@ -39,9 +39,10 @@ class MessagesDisplay(BaseModel):
     content: str
     created_at: datetime
 
+    class Config:
+        orm_mode = True
+
     @validator('created_at', pre=True, allow_reuse=True)
     def format_datetime(cls, value: datetime):
-        # Ensure the value is a datetime object and then format it
         if isinstance(value, datetime):
             return value.strftime('%Y-%m-%d %H:%M:%S')
-        return value

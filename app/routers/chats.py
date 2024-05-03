@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from ..database.database import get_db
 from ..serializers.chats import ChatBase, ChatDisplay, PaginatedChatResponse
-from typing import List, Optional
+from typing import Optional
 from ..repositories.chats_repository import ChatsRepository
 from .users import decode_jwt
 

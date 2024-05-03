@@ -75,7 +75,7 @@ Structure
 14 directories, 38 files
 ```
 
-#Installation
+Installation
 Clone the Repository:
 ```
 https://github.com/dimalbek/ZenithChat.git
@@ -106,8 +106,9 @@ uvicorn app.main:app --reload
 The API will now be accessible at http://127.0.0.1:8000 .
 You may check endpoints at http://127.0.0.1:8000/docs .
 
-#API Endpoints:
-API Endpoints
+
+API Endpoints:
+```
 User Management:
 POST /users/register: Register a new user.
 POST /users/login: Log in a user and return a token.
@@ -121,6 +122,7 @@ GET /chats/all: Retrieve all chats with pagination.
 Messages:
 POST /{chat_id}: Send a message to a specific chat room.
 GET /{chat_id}: Retrieve messages from a specific chat room.
+```
 
 Author
-Developed by [Dinmukhamed Albek].
+Developed by Dinmukhamed Albek.
